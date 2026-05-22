@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/guardrails/main/json-schema/guardrail-violation-schema.json",
+  "title": "Guardrail Violation",
+  "description": "A single event emitted by a guardrail when input, output, retrieval, dialog, or execution content matched a rule. Designed to be portable across Guardrails AI, NVIDIA NeMo Guardrails, Lakera, Azure Prompt Shields, AWS Bedrock Guardrails, OpenAI Moderation, and Google Model Armor.",
+  "type": "object",
+  "required": ["id", "policyId", "ruleId", "direction", "category", "action", "timestamp"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Globally unique identifier for the violation event.",
+      "examples": ["urn:guardrail-violation:01HG3F2N6PMA7Q5"]
+    },
+    "policyId": {
+      "type": "string",
+      "description": "Identifier of the policy that fired."
+    },
+    "policyVersion": {
+      "type": "string",
+      "description": "Version of the policy at the time of evaluation."
+    },
+    "ruleId": {
+      "type": "string",
+      "description": "Identifier of the specific rule that matched."
+    },
+    "vendor": {
+      "type": "string",
+      "description": "Guardrail vendor that produced the event."
+    },
+    "direction": {
+      "type": "string",
+      "enum": ["input", "output", "retrieval", "dialog", "execution"]
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "prompt-injection",
+        "jailbreak",
+        "indirect-prompt-injection",
+        "pii",
+        "sensitive-information",
+        "content-safety",
+        "hate",
+        "harassment",
+        "self-harm",
+        "sexual",
+        "violence",
+        "hallucination",
+        "contextual-grounding",
+        "denied-topic",
+        "competitor-mention",
+        "profanity",
+        "toxic-language",
+        "malicious-url",
+        "data-exfiltration",
+        "structured-output",
+        "tool-misuse",
+        "agent-goal-hijack",
+        "policy-violation"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["info", "low", "medium", "high", "critical"]
+    },
+    "action": {
+      "type": "string",
+      "enum": ["allowed", "blocked", "redacted", "transformed", "logged", "queued-for-review"],
+      "description": "Outcome applied as a result of this match."
+    },
+    "score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Detector confidence score where applicable."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "request": {
+      "type": "object",
+      "description": "Metadata about the originating request.",
+      "properties": {
+        "id": {"type": "string"},
+        "application": {"type": "string"},
+        "model": {"type": "string"},
+        "userId": {"type": "string"},
+        "sessionId": {"type": "string"},
+        "tenantId": {"type": "string"}
+      }
+    },
+    "content": {
+      "type": "object",
+      "description": "The flagged content. Implementations should hash or redact rather than store raw PII.",
+      "properties": {
+        "sample": {
+          "type": "string",
+          "description": "Representative excerpt of the flagged content; should be redacted/hashed for sensitive categories."
+        },
+        "language": {"type": "string"},
+        "tokenCount": {"type": "integer", "minimum": 0},
+        "spans": {
+          "type": "array",
+          "description": "Character offsets of matched substrings within the original content.",
+          "items": {
+            "type": "object",
+            "required": ["start", "end"],
+            "properties": {
+              "start": {"type": "integer", "minimum": 0},
+              "end": {"type": "integer", "minimum": 0},
+              "label": {"type": "string"},
+              "replacement": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "detector": {
+      "type": "object",
+      "properties": {
+        "type": {"type": "string"},
+        "model": {"type": "string"},
+        "version": {"type": "string"},
+        "latencyMs": {"type": "integer", "minimum": 0}
+      }
+    },
+    "remediation": {
+      "type": "object",
+      "description": "What the application should surface in response to the violation.",
+      "properties": {
+        "userMessage": {"type": "string"},
+        "internalNote": {"type": "string"},
+        "escalationChannel": {"type": "string"}
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}

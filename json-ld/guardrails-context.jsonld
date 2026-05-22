@@ -1,0 +1,140 @@
+{
+  "@context": {
+    "@vocab": "https://apievangelist.com/vocab/guardrails#",
+    "guardrails": "https://apievangelist.com/vocab/guardrails#",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "owasp": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+    "nist": "https://www.nist.gov/itl/ai-risk-management-framework",
+    "mitre": "https://atlas.mitre.org/",
+
+    "GuardrailPolicy": {
+      "@id": "guardrails:GuardrailPolicy",
+      "@type": "hydra:Class",
+      "rdfs:comment": "A named policy bundling one or more guardrail rules applied to LLM input, output, retrieval, dialog, or execution traffic."
+    },
+    "GuardrailRule": {
+      "@id": "guardrails:GuardrailRule",
+      "@type": "hydra:Class",
+      "rdfs:comment": "A single rule that inspects content in a direction and fires an action when its detector matches a threat category."
+    },
+    "GuardrailViolation": {
+      "@id": "guardrails:GuardrailViolation",
+      "@type": "hydra:Class",
+      "rdfs:comment": "An event emitted by a guardrail when a rule matched. Cross-vendor portable shape."
+    },
+    "Detector": {
+      "@id": "guardrails:Detector",
+      "@type": "hydra:Class",
+      "rdfs:comment": "The classifier, embedding model, regex, schema, or LLM judge that decides whether a rule matched."
+    },
+    "ThreatCategory": {
+      "@id": "guardrails:ThreatCategory",
+      "@type": "hydra:Class",
+      "rdfs:comment": "A category of risk targeted by a guardrail rule (e.g. prompt-injection, jailbreak, PII)."
+    },
+    "Vendor": {
+      "@id": "guardrails:Vendor",
+      "@type": "hydra:Class",
+      "rdfs:comment": "The provider enforcing a guardrail policy.",
+      "rdfs:subClassOf": {"@id": "schema:Organization"}
+    },
+
+    "direction": {
+      "@id": "guardrails:direction",
+      "@type": "xsd:string",
+      "rdfs:comment": "Which leg of the LLM interaction the rule inspects: input, output, retrieval, dialog, or execution."
+    },
+    "category": {
+      "@id": "guardrails:category",
+      "@type": "@id",
+      "rdfs:range": {"@id": "guardrails:ThreatCategory"}
+    },
+    "severity": {
+      "@id": "guardrails:severity",
+      "@type": "xsd:string",
+      "rdfs:comment": "Severity assigned when the rule fires: info, low, medium, high, critical."
+    },
+    "action": {
+      "@id": "guardrails:action",
+      "@type": "xsd:string",
+      "rdfs:comment": "Outcome applied on match: allow, block, redact, transform, log, human-review."
+    },
+    "scope": {
+      "@id": "guardrails:scope",
+      "@type": "@id"
+    },
+    "rule": {
+      "@id": "guardrails:rule",
+      "@type": "@id",
+      "@container": "@list",
+      "rdfs:range": {"@id": "guardrails:GuardrailRule"}
+    },
+    "detector": {
+      "@id": "guardrails:detector",
+      "@type": "@id",
+      "rdfs:range": {"@id": "guardrails:Detector"}
+    },
+    "threshold": {
+      "@id": "guardrails:threshold",
+      "@type": "xsd:decimal"
+    },
+    "pattern": {
+      "@id": "guardrails:pattern",
+      "@type": "xsd:string"
+    },
+    "schemaRef": {
+      "@id": "guardrails:schemaRef",
+      "@type": "@id"
+    },
+    "vendor": {
+      "@id": "guardrails:vendor",
+      "@type": "@id",
+      "rdfs:range": {"@id": "guardrails:Vendor"}
+    },
+    "deployment": {
+      "@id": "guardrails:deployment",
+      "@type": "xsd:string",
+      "rdfs:comment": "Where the guardrail is enforced: sdk, api, gateway, sidecar, reverse-proxy, platform, cloud-service."
+    },
+    "score": {
+      "@id": "guardrails:score",
+      "@type": "xsd:decimal"
+    },
+    "policyId": {"@id": "guardrails:policyId", "@type": "xsd:string"},
+    "ruleId": {"@id": "guardrails:ruleId", "@type": "xsd:string"},
+    "policyVersion": {"@id": "guardrails:policyVersion", "@type": "xsd:string"},
+    "content": {"@id": "guardrails:content", "@type": "@id"},
+    "remediation": {"@id": "guardrails:remediation", "@type": "@id"},
+
+    "prompt-injection": {
+      "@id": "guardrails:PromptInjection",
+      "rdfs:seeAlso": [
+        {"@id": "owasp:LLM01_2025_PromptInjection"},
+        {"@id": "mitre:AML.T0051"}
+      ]
+    },
+    "jailbreak": {"@id": "guardrails:Jailbreak"},
+    "indirect-prompt-injection": {"@id": "guardrails:IndirectPromptInjection"},
+    "pii": {"@id": "guardrails:PII", "rdfs:seeAlso": {"@id": "nist:SP-800-122"}},
+    "content-safety": {"@id": "guardrails:ContentSafety"},
+    "hallucination": {"@id": "guardrails:Hallucination"},
+    "denied-topic": {"@id": "guardrails:DeniedTopic"},
+    "structured-output": {"@id": "guardrails:StructuredOutput"},
+    "malicious-url": {"@id": "guardrails:MaliciousURL"},
+    "data-exfiltration": {"@id": "guardrails:DataExfiltration"},
+    "tool-misuse": {"@id": "guardrails:ToolMisuse"},
+    "agent-goal-hijack": {"@id": "guardrails:AgentGoalHijack"},
+
+    "name": {"@id": "schema:name", "@type": "xsd:string"},
+    "description": {"@id": "schema:description", "@type": "xsd:string"},
+    "url": {"@id": "schema:url", "@type": "@id"},
+    "version": {"@id": "schema:version", "@type": "xsd:string"},
+    "created": {"@id": "dcterms:created", "@type": "xsd:dateTime"},
+    "modified": {"@id": "dcterms:modified", "@type": "xsd:dateTime"},
+    "timestamp": {"@id": "dcterms:date", "@type": "xsd:dateTime"}
+  }
+}

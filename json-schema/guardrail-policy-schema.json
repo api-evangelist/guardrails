@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/guardrails/main/json-schema/guardrail-policy-schema.json",
+  "title": "Guardrail Policy",
+  "description": "A vendor-neutral schema describing a guardrail policy applied to LLM inputs and/or outputs. Models a single named policy that bundles one or more rules, each scoped to direction (input, output, retrieval, dialog, execution), threat category, severity threshold, and action (allow, block, redact, transform, log).",
+  "type": "object",
+  "required": ["id", "name", "version", "rules"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the policy (URN, UUID, or slug).",
+      "examples": ["urn:guardrail-policy:customer-support-v3", "policy-2026-05-22-001"]
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable policy name."
+    },
+    "description": {
+      "type": "string",
+      "description": "What this policy enforces and the application context it applies to."
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version string for the policy revision.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$"
+    },
+    "vendor": {
+      "type": "string",
+      "description": "Identifier of the guardrail provider enforcing the policy.",
+      "examples": [
+        "guardrails-ai",
+        "nvidia-nemo-guardrails",
+        "lakera-ai",
+        "azure-prompt-shields",
+        "aws-bedrock-guardrails",
+        "openai-moderation",
+        "google-model-armor",
+        "hiddenlayer",
+        "cisco-ai-defense",
+        "lasso-security",
+        "promptarmor",
+        "wallarm-ai-security",
+        "confident-ai"
+      ]
+    },
+    "deployment": {
+      "type": "string",
+      "enum": ["sdk", "api", "gateway", "sidecar", "reverse-proxy", "platform", "cloud-service"],
+      "description": "Where the policy is enforced in the request path."
+    },
+    "scope": {
+      "type": "object",
+      "description": "Which traffic this policy applies to.",
+      "properties": {
+        "applications": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Application identifiers this policy covers."
+        },
+        "models": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Foundation model identifiers this policy covers."
+        },
+        "environments": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["production", "staging", "development", "evaluation"]}
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Ordered list of guardrail rules evaluated for matching traffic.",
+      "items": {"$ref": "#/$defs/rule"}
+    },
+    "defaultAction": {
+      "type": "string",
+      "enum": ["allow", "block", "redact", "transform", "log"],
+      "description": "Action when no rule matches.",
+      "default": "allow"
+    },
+    "telemetry": {
+      "type": "object",
+      "description": "Where to emit violation events.",
+      "properties": {
+        "sink": {"type": "string", "format": "uri"},
+        "format": {"type": "string", "enum": ["json", "otlp", "cef", "syslog"]}
+      }
+    },
+    "created": {"type": "string", "format": "date-time"},
+    "modified": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "required": ["id", "direction", "category", "action"],
+      "properties": {
+        "id": {"type": "string", "description": "Rule identifier unique within the policy."},
+        "name": {"type": "string"},
+        "description": {"type": "string"},
+        "direction": {
+          "type": "string",
+          "enum": ["input", "output", "retrieval", "dialog", "execution"],
+          "description": "Which leg of the LLM interaction this rule inspects. Mirrors NVIDIA NeMo Guardrails rail taxonomy."
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "prompt-injection",
+            "jailbreak",
+            "indirect-prompt-injection",
+            "pii",
+            "sensitive-information",
+            "content-safety",
+            "hate",
+            "harassment",
+            "self-harm",
+            "sexual",
+            "violence",
+            "hallucination",
+            "contextual-grounding",
+            "denied-topic",
+            "competitor-mention",
+            "profanity",
+            "toxic-language",
+            "malicious-url",
+            "data-exfiltration",
+            "structured-output",
+            "tool-misuse",
+            "agent-goal-hijack",
+            "policy-violation"
+          ],
+          "description": "Threat or policy category this rule targets."
+        },
+        "detector": {
+          "type": "object",
+          "description": "How the rule decides a match.",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["regex", "classifier", "embedding", "llm-judge", "schema", "deny-list", "allow-list", "custom"]
+            },
+            "model": {"type": "string", "description": "Detector model identifier where applicable."},
+            "pattern": {"type": "string", "description": "Regex or pattern source."},
+            "threshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Score above which a match is fired (for classifier/embedding detectors)."
+            },
+            "schemaRef": {
+              "type": "string",
+              "format": "uri",
+              "description": "Reference to a JSON Schema for structured-output validation."
+            }
+          }
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["info", "low", "medium", "high", "critical"],
+          "description": "Severity assigned when this rule fires."
+        },
+        "action": {
+          "type": "string",
+          "enum": ["allow", "block", "redact", "transform", "log", "human-review"],
+          "description": "What to do when the rule fires."
+        },
+        "redactionPlaceholder": {
+          "type": "string",
+          "description": "Token used to replace detected content when action is redact.",
+          "examples": ["[REDACTED]", "<PII>"]
+        },
+        "tags": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    }
+  }
+}

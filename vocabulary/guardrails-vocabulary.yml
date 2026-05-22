@@ -1,0 +1,244 @@
+vocabulary:
+  name: AI Guardrails Vocabulary
+  description: >-
+    Shared domain vocabulary for AI guardrails covering policies, rules, scopes,
+    threat categories, detectors, severities, and actions. Reconciles terminology
+    across Guardrails AI, NVIDIA NeMo Guardrails, Lakera, Azure AI Content Safety
+    (Prompt Shields), Amazon Bedrock Guardrails, OpenAI Moderation, Google Cloud
+    Model Armor, HiddenLayer, Cisco AI Defense, Lasso Security, PromptArmor,
+    Wallarm, and Confident AI.
+  version: '1.0'
+  created: '2026-05-22'
+  modified: '2026-05-22'
+
+core-concepts:
+  - term: Guardrail
+    definition: >-
+      A runtime or design-time control that screens content flowing into or out
+      of an LLM-backed application or agent and applies a policy decision —
+      allow, block, redact, transform, log, or escalate.
+    related:
+      - Policy
+      - Rule
+      - Violation
+  - term: Policy
+    definition: >-
+      A named, versioned bundle of one or more rules that together enforce an
+      application's safety, security, and compliance posture.
+    related:
+      - Rule
+      - Scope
+  - term: Rule
+    definition: >-
+      A single decision unit pairing a direction, threat category, detector, and
+      action. Mirrors the rail concept in NVIDIA NeMo Guardrails and the
+      validator concept in Guardrails AI.
+    related:
+      - Detector
+      - Category
+      - Action
+  - term: Violation
+    definition: >-
+      An event emitted by a guardrail when a rule matched. Carries the policy
+      and rule identifiers, the matched span or score, the action applied, and
+      remediation guidance.
+    related:
+      - Rule
+      - Action
+
+directions:
+  - term: Input Rail
+    definition: >-
+      A rule that inspects user-supplied prompts before they reach the LLM.
+      Typical use: prompt-injection detection, jailbreak detection, PII
+      redaction on input.
+    aliases:
+      - Input Guardrail
+      - Pre-Filter
+    related:
+      - Prompt Injection
+      - Jailbreak
+  - term: Output Rail
+    definition: >-
+      A rule that inspects model-generated responses before they reach the user.
+      Typical use: hallucination detection, content-safety filtering, structured-output
+      validation, secret leakage prevention.
+    aliases:
+      - Output Guardrail
+      - Post-Filter
+    related:
+      - Hallucination
+      - Content Safety
+  - term: Retrieval Rail
+    definition: >-
+      A rule applied to retrieved RAG chunks before they enter the LLM context
+      window. Catches indirect prompt injection embedded in documents and
+      ensures source freshness or licensing constraints.
+    related:
+      - Indirect Prompt Injection
+      - Contextual Grounding
+  - term: Dialog Rail
+    definition: >-
+      A rule that constrains conversational flow and topic adherence across
+      multiple turns. From NVIDIA NeMo Guardrails' Colang dialog flow taxonomy.
+    related:
+      - Denied Topic
+      - Colang
+  - term: Execution Rail
+    definition: >-
+      A rule that gates tool, function, or agent action invocations. Validates
+      tool inputs and outputs to prevent tool misuse and agent goal hijack.
+    related:
+      - Tool Misuse
+      - Agent Goal Hijack
+
+threat-categories:
+  - term: Prompt Injection
+    definition: >-
+      A user crafting an input that overrides the system prompt or hidden
+      instructions to elicit unintended LLM behavior.
+    references:
+      - https://owasp.org/www-project-top-10-for-large-language-model-applications/
+    related:
+      - Indirect Prompt Injection
+      - Jailbreak
+  - term: Indirect Prompt Injection
+    definition: >-
+      An attacker embeds instructions in third-party content (documents, web
+      pages, emails) that the LLM later ingests, hijacking the session without
+      user awareness. Microsoft Azure Prompt Shields classifies this as
+      "document attacks."
+    related:
+      - Prompt Injection
+      - Data Exfiltration
+  - term: Jailbreak
+    definition: >-
+      A class of prompt attack aimed at bypassing the model's built-in safety
+      training and policy guardrails. Subtypes include role-play, encoding
+      attacks, and embedded conversation mockups.
+    related:
+      - Prompt Injection
+  - term: PII
+    definition: >-
+      Personally identifiable information — names, addresses, government IDs,
+      phone numbers, financial account numbers — that policy may require to
+      be redacted or blocked.
+    aliases:
+      - Sensitive Information
+    related:
+      - Data Exfiltration
+  - term: Content Safety
+    definition: >-
+      Detection of harmful content categories — hate, harassment, sexual,
+      self-harm, violence, dangerous content — in inputs or outputs.
+    aliases:
+      - Content Moderation
+    related:
+      - Hate
+      - Harassment
+  - term: Hallucination
+    definition: >-
+      Model output that is unsupported by retrieved sources, contradicts grounding
+      data, or asserts false facts. AWS Bedrock Guardrails calls the related
+      check "contextual grounding."
+    aliases:
+      - Ungrounded Response
+    related:
+      - Contextual Grounding
+  - term: Denied Topic
+    definition: >-
+      An application-specific topic the LLM must refuse to discuss — e.g. a
+      banking assistant refusing investment advice. Modeled directly in AWS
+      Bedrock Guardrails.
+  - term: Malicious URL
+    definition: >-
+      A phishing, malware, or otherwise hostile link emitted in the LLM's
+      response. Google Cloud Model Armor inspects the first 40 URLs in a payload.
+  - term: Data Exfiltration
+    definition: >-
+      An attack pattern where a compromised LLM session is used to extract
+      proprietary data, embeddings, system prompts, or credentials.
+  - term: Tool Misuse
+    definition: >-
+      An agent invokes a tool or function in a way that violates policy — wrong
+      arguments, off-policy target, escalated permissions.
+    related:
+      - Agent Goal Hijack
+  - term: Agent Goal Hijack
+    definition: >-
+      Adversarial input that redirects an autonomous agent away from its
+      assigned objective. Highlighted by Confident AI's DeepTeam for OWASP Top
+      10 for Agentic Applications.
+  - term: Structured Output Violation
+    definition: >-
+      LLM output that fails to conform to a target JSON Schema, regex, or
+      grammar. A core Guardrails AI use case.
+
+severities:
+  - term: Info
+    definition: Informational match used for observability only; no action taken.
+  - term: Low
+    definition: Match with marginal risk; typically logged and surfaced in dashboards.
+  - term: Medium
+    definition: Match warranting redaction, rewriting, or warning the user.
+  - term: High
+    definition: Match warranting blocking the request or response.
+  - term: Critical
+    definition: Match warranting immediate block plus escalation to human review or security operations.
+
+actions:
+  - term: Allow
+    definition: Permit the content to pass through unchanged.
+  - term: Block
+    definition: Refuse to send the input to the model or refuse to return the output to the user.
+  - term: Redact
+    definition: Replace matched substrings with a placeholder before passing the content downstream.
+  - term: Transform
+    definition: Rewrite the matched content to a safer form (e.g. paraphrase, structured-output coercion).
+  - term: Log
+    definition: Emit a telemetry event without modifying the content.
+  - term: Human Review
+    definition: Queue the request or response for a human reviewer before completion.
+
+deployment-patterns:
+  - term: SDK
+    definition: Guardrail enforced in-process via a library (Guardrails AI, NeMo Guardrails, DeepEval).
+  - term: API
+    definition: Standalone HTTP service the application calls before/after the LLM (Lakera Guard, OpenAI Moderation).
+  - term: Gateway
+    definition: Reverse proxy or AI gateway terminates the LLM call and applies guardrails inline (Lasso, Apigee + Model Armor).
+  - term: Cloud Service
+    definition: Provider-native control wired into the foundation-model API (AWS Bedrock Guardrails, Azure Prompt Shields, Google Model Armor).
+  - term: Platform
+    definition: Enterprise control plane with discovery, red teaming, and runtime enforcement (HiddenLayer, Cisco AI Defense, PromptArmor).
+
+vendor-taxonomy:
+  - term: Provider-Native Guardrail
+    definition: >-
+      A guardrail tightly coupled to a foundation-model provider's inference
+      stack — AWS Bedrock Guardrails, Azure AI Content Safety/Prompt Shields,
+      Google Cloud Model Armor, OpenAI Moderation. Strength: zero integration
+      cost when already on that provider. Weakness: cross-provider portability.
+  - term: Third-Party Guardrail
+    definition: >-
+      An independent vendor offering guardrails across multiple model providers
+      and deployment surfaces — Lakera, HiddenLayer, Cisco AI Defense (Robust
+      Intelligence), Lasso Security, PromptArmor, Wallarm. Strength: portability
+      and depth. Weakness: an extra integration and per-request cost.
+  - term: Open-Source Guardrail
+    definition: >-
+      Library or toolkit released under a permissive license — Guardrails AI,
+      NVIDIA NeMo Guardrails, DeepEval/DeepTeam. Strength: full control, no
+      runtime dependency. Weakness: requires teams to operate the detection
+      models themselves.
+
+standards-references:
+  - term: OWASP LLM Top 10
+    url: https://owasp.org/www-project-top-10-for-large-language-model-applications/
+    definition: The canonical risk taxonomy that most guardrail vendors map their detections to.
+  - term: NIST AI Risk Management Framework
+    url: https://www.nist.gov/itl/ai-risk-management-framework
+    definition: Governance framework guardrails help operationalize.
+  - term: MITRE ATLAS
+    url: https://atlas.mitre.org/
+    definition: Adversarial threat landscape for AI systems used by red-teaming guardrail features.

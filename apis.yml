@@ -1,0 +1,422 @@
+aid: guardrails
+name: AI Guardrails
+description: >-
+  AI Guardrails are runtime and design-time controls that screen the inputs and
+  outputs of large language model (LLM) applications and AI agents. They detect
+  and block prompt injection, jailbreak attempts, personally identifiable information
+  (PII) leakage, toxic or unsafe content, hallucinations, and policy violations,
+  and they validate structured outputs against schemas. This topic repository
+  catalogs the vendor and open-source landscape — provider-native guardrails
+  (AWS Bedrock, Azure Content Safety, Google Model Armor, OpenAI Moderation),
+  third-party AI security platforms (Lakera, HiddenLayer, Cisco AI Defense,
+  Lasso Security, PromptArmor, Wallarm), and open-source frameworks (Guardrails
+  AI, NVIDIA NeMo Guardrails, DeepEval) — and provides a shared vocabulary,
+  JSON Schema for policy and violation records, JSON-LD context, and example
+  payloads.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - AI Safety
+  - AI Security
+  - Content Moderation
+  - Guardrails
+  - Jailbreak Detection
+  - LLM Security
+  - PII Detection
+  - Prompt Injection
+  - Responsible AI
+url: https://raw.githubusercontent.com/api-evangelist/guardrails/refs/heads/main/apis.yml
+humanURL: https://github.com/api-evangelist/guardrails
+created: '2026-05-22'
+modified: '2026-05-22'
+specificationVersion: '0.19'
+apis:
+  - aid: guardrails:guardrails-ai
+    name: Guardrails AI
+    description: >-
+      Open-source Python framework and commercial Hub for adding programmable
+      input/output validators to LLM applications. Validators cover regex, PII,
+      toxic language, competitor mentions, jailbreak attempts, and structured-output
+      schema enforcement. The commercial side ships Snowglobe for synthetic data
+      and an AI Reliability Platform.
+    humanURL: https://www.guardrailsai.com/
+    baseURL: https://api.guardrailsai.com/
+    tags:
+      - Hallucination
+      - Jailbreak Detection
+      - Open Source
+      - PII Detection
+      - Structured Output
+      - Validator Hub
+    properties:
+      - type: Homepage
+        url: https://www.guardrailsai.com/
+      - type: Documentation
+        url: https://www.guardrailsai.com/docs
+      - type: GitHub
+        url: https://github.com/guardrails-ai/guardrails
+      - type: Hub
+        url: https://hub.guardrailsai.com/
+      - type: License
+        url: https://github.com/guardrails-ai/guardrails/blob/main/LICENSE
+      - type: PyPI
+        url: https://pypi.org/project/guardrails-ai/
+      - type: x-deployment
+        value: SDK
+      - type: x-threat-categories
+        value: prompt-injection,pii,jailbreak,hallucination,structured-output
+  - aid: guardrails:nvidia-nemo-guardrails
+    name: NVIDIA NeMo Guardrails
+    description: >-
+      Open-source toolkit for adding programmable guardrails to LLM-based
+      conversational systems. Implements five rail types — input, output, dialog,
+      retrieval, and execution — using the Colang modeling language. Integrates
+      with OpenAI, LLaMa, Falcon, Vicuna, and Mosaic models.
+    humanURL: https://docs.nvidia.com/nemo/guardrails/
+    tags:
+      - Colang
+      - Dialog Rails
+      - Input Rails
+      - NVIDIA
+      - Open Source
+      - Output Rails
+      - Retrieval Rails
+    properties:
+      - type: Homepage
+        url: https://developer.nvidia.com/nemo-guardrails
+      - type: Documentation
+        url: https://docs.nvidia.com/nemo/guardrails/
+      - type: GitHub
+        url: https://github.com/NVIDIA/NeMo-Guardrails
+      - type: PyPI
+        url: https://pypi.org/project/nemoguardrails/
+      - type: License
+        url: https://github.com/NVIDIA/NeMo-Guardrails/blob/main/LICENSE
+      - type: x-deployment
+        value: SDK
+      - type: x-threat-categories
+        value: prompt-injection,jailbreak,content-safety,hallucination,dialog-policy
+  - aid: guardrails:lakera-ai
+    name: Lakera AI
+    description: >-
+      AI-native security platform protecting generative AI applications and agents
+      from prompt injection, data leakage, toxic content, and compliance risks.
+      Products include Lakera Guard (runtime API), Workforce AI Security, AI Agent
+      Security, AI Red Teaming, and Gandalf (red-teaming training game).
+    humanURL: https://www.lakera.ai/
+    baseURL: https://api.lakera.ai/
+    tags:
+      - AI Red Teaming
+      - Data Leakage
+      - Multilingual
+      - Prompt Injection
+      - Runtime API
+      - Third-Party Vendor
+    properties:
+      - type: Homepage
+        url: https://www.lakera.ai/
+      - type: Documentation
+        url: https://docs.lakera.ai/docs/quickstart
+      - type: APIReference
+        url: https://docs.lakera.ai/docs/api
+      - type: Changelog
+        url: https://platform.lakera.ai/docs/changelog
+      - type: Customers
+        url: https://www.lakera.ai/customers
+      - type: x-deployment
+        value: API
+      - type: x-threat-categories
+        value: prompt-injection,pii,content-safety,jailbreak,data-leakage
+      - type: x-scale
+        value: 1M+ secured transactions/app/day; sub-50ms latency; 100+ languages
+  - aid: guardrails:microsoft-azure-prompt-shields
+    name: Microsoft Azure AI Content Safety — Prompt Shields
+    description: >-
+      Unified API in Azure AI Content Safety that detects and blocks adversarial
+      user-prompt attacks and indirect document attacks on LLMs. Replaces the
+      earlier Jailbreak risk detection service. Detects role-play, system-rule
+      changes, conversation-mockup attacks, encoding attacks, and document-borne
+      indirect prompt injection.
+    humanURL: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection
+    tags:
+      - Azure
+      - Content Safety
+      - Document Attacks
+      - Indirect Prompt Injection
+      - Jailbreak Detection
+      - Microsoft
+      - Provider-Native
+    properties:
+      - type: Documentation
+        url: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection
+      - type: Overview
+        url: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/overview
+      - type: APIReference
+        url: https://learn.microsoft.com/en-us/rest/api/contentsafety/
+      - type: Pricing
+        url: https://azure.microsoft.com/en-us/pricing/details/cognitive-services/content-safety/
+      - type: x-deployment
+        value: Cloud Service
+      - type: x-threat-categories
+        value: prompt-injection,jailbreak,indirect-prompt-injection,content-safety
+  - aid: guardrails:aws-bedrock-guardrails
+    name: Amazon Bedrock Guardrails
+    description: >-
+      Configurable safeguards on Amazon Bedrock providing content filters,
+      denied topics, word filters, sensitive-information (PII) filters,
+      contextual grounding checks (hallucination detection in RAG), and
+      Automated Reasoning checks. Invokable inline with foundation models or
+      standalone via the ApplyGuardrail API.
+    humanURL: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html
+    tags:
+      - AWS
+      - Bedrock
+      - Contextual Grounding
+      - Denied Topics
+      - PII Detection
+      - Provider-Native
+      - RAG
+    properties:
+      - type: Documentation
+        url: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html
+      - type: APIReference
+        url: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_Operations_Amazon_Bedrock.html
+      - type: Pricing
+        url: https://aws.amazon.com/bedrock/pricing/
+      - type: x-deployment
+        value: Cloud Service
+      - type: x-threat-categories
+        value: content-safety,denied-topics,pii,prompt-injection,hallucination
+  - aid: guardrails:openai-moderation
+    name: OpenAI Moderation API
+    description: >-
+      Free OpenAI endpoint that classifies text and images across harmful-content
+      categories including sexual, hate, harassment, self-harm, violence, and
+      illicit. Multimodal moderation model is omni-moderation-latest.
+    humanURL: https://platform.openai.com/docs/guides/moderation
+    baseURL: https://api.openai.com/v1/moderations
+    tags:
+      - Content Moderation
+      - Free Tier
+      - Multimodal
+      - OpenAI
+      - Provider-Native
+    properties:
+      - type: Documentation
+        url: https://platform.openai.com/docs/guides/moderation
+      - type: APIReference
+        url: https://platform.openai.com/docs/api-reference/moderations
+      - type: Pricing
+        url: https://openai.com/api/pricing/
+      - type: x-deployment
+        value: API
+      - type: x-threat-categories
+        value: content-safety,hate,harassment,self-harm,sexual,violence
+  - aid: guardrails:google-model-armor
+    name: Google Cloud Model Armor
+    description: >-
+      Google Cloud service that screens LLM prompts and responses for prompt
+      injection, jailbreak attacks, sensitive data (PII, credit cards, SSNs,
+      API keys), harmful content (hate, harassment, sexual, dangerous, CSAM),
+      and malicious URLs. Stateless inspector with Inspect-Only and Inspect-and-Block
+      enforcement modes. Integrates with Apigee, Gemini Enterprise, GKE, Vertex
+      Agent Platform, and LangChain.
+    humanURL: https://docs.cloud.google.com/security-command-center/docs/model-armor-overview
+    tags:
+      - Apigee
+      - Google Cloud
+      - Malicious URLs
+      - PII Detection
+      - Prompt Injection
+      - Provider-Native
+      - Vertex AI
+    properties:
+      - type: Documentation
+        url: https://docs.cloud.google.com/security-command-center/docs/model-armor-overview
+      - type: SecurityCommandCenter
+        url: https://cloud.google.com/security-command-center
+      - type: x-deployment
+        value: Cloud Service
+      - type: x-threat-categories
+        value: prompt-injection,jailbreak,pii,content-safety,malicious-urls
+  - aid: guardrails:hiddenlayer
+    name: HiddenLayer
+    description: >-
+      AI security platform spanning AI Discovery, AI Supply Chain Security, AI
+      Attack Simulation, and AI Runtime Security. Defends against prompt injection,
+      jailbreaks, model manipulation, data leakage, and supply-chain compromise
+      using deterministic classifiers that operate outside the LLM inference path.
+    humanURL: https://hiddenlayer.com/
+    tags:
+      - Adversarial ML
+      - AI Detection and Response
+      - Model Scanner
+      - Runtime Security
+      - Supply Chain
+      - Third-Party Vendor
+    properties:
+      - type: Homepage
+        url: https://hiddenlayer.com/
+      - type: Platform
+        url: https://hiddenlayer.com/aisec-platform/
+      - type: x-deployment
+        value: Platform
+      - type: x-threat-categories
+        value: prompt-injection,jailbreak,model-manipulation,data-leakage,supply-chain
+  - aid: guardrails:cisco-ai-defense
+    name: Cisco AI Defense (formerly Robust Intelligence)
+    description: >-
+      Cisco AI Defense — the productization of the Robust Intelligence acquisition —
+      provides AI model validation, runtime protection, and continuous algorithmic
+      red teaming for production LLM and ML applications. Covers prompt injection,
+      jailbreak, model vulnerability scanning, and policy enforcement at the network
+      and application layer.
+    humanURL: https://www.cisco.com/site/us/en/products/security/ai-defense/index.html
+    tags:
+      - Algorithmic Red Teaming
+      - Cisco
+      - Model Validation
+      - Network-Layer
+      - Robust Intelligence
+      - Third-Party Vendor
+    properties:
+      - type: Homepage
+        url: https://www.cisco.com/site/us/en/products/security/ai-defense/index.html
+      - type: x-deployment
+        value: Platform
+      - type: x-threat-categories
+        value: prompt-injection,jailbreak,model-vulnerability,policy-enforcement
+  - aid: guardrails:lasso-security
+    name: Lasso Security
+    description: >-
+      Enterprise AI security platform providing Intent Security, AI Discovery
+      and AI-BOM, Automated AI Red Teaming, AI Detection and Response, and
+      Runtime Enforcement. Deploys at the proxy, API, or AI gateway layer.
+    humanURL: https://www.lasso.security/
+    tags:
+      - AI-BOM
+      - AI Discovery
+      - AI Gateway
+      - Enterprise
+      - Runtime Enforcement
+      - Third-Party Vendor
+    properties:
+      - type: Homepage
+        url: https://www.lasso.security/
+      - type: Customers
+        url: https://www.lasso.security/customers
+      - type: x-deployment
+        value: Gateway
+      - type: x-threat-categories
+        value: prompt-injection,supply-chain,data-loss,content-safety,agentic-risk
+  - aid: guardrails:promptarmor
+    name: PromptArmor
+    description: >-
+      Third-party AI risk and assurance platform spanning TPRM, InfoSec, GRC,
+      and Privacy. Assesses risk across 26 vectors aligned with OWASP LLM Top 10,
+      NIST AI RMF, and MITRE Atlas. Best known for research on indirect prompt
+      injection in Claude for Excel, Google Antigravity, Slack AI, and Writer.com.
+    humanURL: https://promptarmor.com/
+    tags:
+      - GRC
+      - Indirect Prompt Injection
+      - MITRE Atlas
+      - NIST AI RMF
+      - OWASP LLM Top 10
+      - Third-Party Vendor
+      - TPRM
+    properties:
+      - type: Homepage
+        url: https://promptarmor.com/
+      - type: x-deployment
+        value: Platform
+      - type: x-threat-categories
+        value: indirect-prompt-injection,data-exfiltration,vendor-risk
+  - aid: guardrails:wallarm-ai-security
+    name: Wallarm AI Security
+    description: >-
+      Wallarm extends its API security platform with AI-specific protections
+      covering the OWASP LLM Top 10, prompt injection, and abuse of LLM-backed
+      API endpoints. Deploys as a sidecar, reverse proxy, or in-line API gateway.
+    humanURL: https://www.wallarm.com/product/ai-security
+    tags:
+      - API Security
+      - OWASP LLM Top 10
+      - Prompt Injection
+      - Reverse Proxy
+      - Third-Party Vendor
+      - Wallarm
+    properties:
+      - type: Homepage
+        url: https://www.wallarm.com/product/ai-security
+      - type: Documentation
+        url: https://docs.wallarm.com/
+      - type: x-deployment
+        value: API Gateway
+      - type: x-threat-categories
+        value: prompt-injection,api-abuse,owasp-llm-top10
+  - aid: guardrails:confident-ai
+    name: Confident AI
+    description: >-
+      AI quality and safety platform behind the open-source DeepEval evaluation
+      framework and DeepTeam red-teaming framework. Provides LLM evaluation,
+      observability, and red-teaming for OWASP Top 10 for Agentic Applications
+      risks including goal hijack, instruction injection, tool misuse, and PII
+      leakage.
+    humanURL: https://www.confident-ai.com/
+    tags:
+      - Agentic AI
+      - DeepEval
+      - DeepTeam
+      - Evaluation
+      - Observability
+      - Open Source
+      - Red Teaming
+    properties:
+      - type: Homepage
+        url: https://www.confident-ai.com/
+      - type: GitHub
+        url: https://github.com/confident-ai/deepeval
+      - type: Documentation
+        url: https://docs.confident-ai.com/
+      - type: x-deployment
+        value: SDK
+      - type: x-threat-categories
+        value: agent-goal-hijack,tool-misuse,prompt-injection,pii,bias
+  - aid: guardrails:layerup-ai
+    name: Layerup AI
+    description: >-
+      Note Layerup AI has pivoted toward agentic AI for insurance workflows
+      (claims, underwriting). Earlier positioning included LLM guardrails and
+      PII redaction; the current product surface focuses on insurance automation
+      rather than horizontal AI guardrails. Catalogued for historical context.
+    humanURL: https://uselayerup.com/
+    tags:
+      - Agentic AI
+      - Historical
+      - Insurance
+      - Pivot
+    properties:
+      - type: Homepage
+        url: https://uselayerup.com/
+      - type: x-deployment
+        value: Platform
+      - type: x-threat-categories
+        value: historical
+common:
+  - type: Repository
+    url: https://github.com/api-evangelist/guardrails
+  - type: JSONSchema
+    url: json-schema/guardrail-policy-schema.json
+  - type: JSONSchema
+    url: json-schema/guardrail-violation-schema.json
+  - type: JSONLD
+    url: json-ld/guardrails-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/guardrails-vocabulary.yml
+  - type: Examples
+    url: examples/
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+    url: https://apievangelist.com

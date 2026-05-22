@@ -1,0 +1,127 @@
+{
+  "id": "urn:guardrail-policy:customer-support-v3",
+  "name": "Customer Support Assistant Guardrail",
+  "description": "Production policy for a customer support LLM assistant. Strips PII on input, blocks jailbreaks and prompt injection, refuses denied investment-advice topics, and validates JSON-structured tool outputs.",
+  "version": "3.2.0",
+  "vendor": "guardrails-ai",
+  "deployment": "sdk",
+  "scope": {
+    "applications": ["support-chat-prod"],
+    "models": ["openai:gpt-4o", "anthropic:claude-3-5-sonnet"],
+    "environments": ["production"]
+  },
+  "rules": [
+    {
+      "id": "input-pii-redact",
+      "name": "Redact PII on Input",
+      "description": "Replaces PII spans with placeholders before the prompt reaches the model.",
+      "direction": "input",
+      "category": "pii",
+      "detector": {
+        "type": "classifier",
+        "model": "guardrails-hub:detect-pii@0.4.1",
+        "threshold": 0.7
+      },
+      "severity": "medium",
+      "action": "redact",
+      "redactionPlaceholder": "[PII]",
+      "tags": ["GDPR", "CCPA"]
+    },
+    {
+      "id": "input-prompt-injection-block",
+      "name": "Block Prompt Injection",
+      "direction": "input",
+      "category": "prompt-injection",
+      "detector": {
+        "type": "classifier",
+        "model": "lakera-guard:prompt-injection@2026.05",
+        "threshold": 0.85
+      },
+      "severity": "high",
+      "action": "block"
+    },
+    {
+      "id": "input-jailbreak-block",
+      "name": "Block Jailbreak Attempts",
+      "direction": "input",
+      "category": "jailbreak",
+      "detector": {
+        "type": "classifier",
+        "model": "azure-prompt-shields:user@latest",
+        "threshold": 0.8
+      },
+      "severity": "high",
+      "action": "block"
+    },
+    {
+      "id": "retrieval-indirect-injection",
+      "name": "Strip Indirect Prompt Injection From RAG Chunks",
+      "direction": "retrieval",
+      "category": "indirect-prompt-injection",
+      "detector": {
+        "type": "classifier",
+        "model": "azure-prompt-shields:document@latest",
+        "threshold": 0.75
+      },
+      "severity": "high",
+      "action": "transform"
+    },
+    {
+      "id": "dialog-denied-investment-advice",
+      "name": "Refuse Investment Advice",
+      "direction": "dialog",
+      "category": "denied-topic",
+      "detector": {
+        "type": "llm-judge",
+        "model": "internal:topic-classifier@v2"
+      },
+      "severity": "medium",
+      "action": "block"
+    },
+    {
+      "id": "output-content-safety",
+      "name": "Filter Harmful Output",
+      "direction": "output",
+      "category": "content-safety",
+      "detector": {
+        "type": "classifier",
+        "model": "openai-moderation:omni-moderation-latest",
+        "threshold": 0.6
+      },
+      "severity": "high",
+      "action": "block"
+    },
+    {
+      "id": "output-hallucination-grounding",
+      "name": "Check Output Is Grounded in Retrieved Sources",
+      "direction": "output",
+      "category": "hallucination",
+      "detector": {
+        "type": "classifier",
+        "model": "aws-bedrock-guardrails:contextual-grounding@latest",
+        "threshold": 0.7
+      },
+      "severity": "medium",
+      "action": "human-review"
+    },
+    {
+      "id": "execution-tool-schema-validate",
+      "name": "Validate Tool-Call JSON Output",
+      "direction": "execution",
+      "category": "structured-output",
+      "detector": {
+        "type": "schema",
+        "schemaRef": "https://example.com/tool-call-schema.json"
+      },
+      "severity": "low",
+      "action": "transform"
+    }
+  ],
+  "defaultAction": "allow",
+  "telemetry": {
+    "sink": "https://otel.example.com/v1/logs",
+    "format": "otlp"
+  },
+  "created": "2026-05-22T10:00:00Z",
+  "modified": "2026-05-22T10:00:00Z"
+}
