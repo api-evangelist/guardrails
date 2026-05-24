@@ -416,6 +416,8 @@ common:
     url: vocabulary/guardrails-vocabulary.yml
   - type: Examples
     url: examples/
+  - type: LLMsTxt
+    url: https://docs.lakera.ai/llms.txt
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
