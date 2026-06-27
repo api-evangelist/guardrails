@@ -49,7 +49,7 @@ apis:
       - Structured Output
       - Validator Hub
     properties:
-      - type: Homepage
+      - type: Website
         url: https://www.guardrailsai.com/
       - type: Documentation
         url: https://www.guardrailsai.com/docs
@@ -82,7 +82,7 @@ apis:
       - Output Rails
       - Retrieval Rails
     properties:
-      - type: Homepage
+      - type: Website
         url: https://developer.nvidia.com/nemo-guardrails
       - type: Documentation
         url: https://docs.nvidia.com/nemo/guardrails/
@@ -113,13 +113,13 @@ apis:
       - Runtime API
       - Third-Party Vendor
     properties:
-      - type: Homepage
+      - type: Website
         url: https://www.lakera.ai/
       - type: Documentation
         url: https://docs.lakera.ai/docs/quickstart
       - type: APIReference
         url: https://docs.lakera.ai/docs/api
-      - type: Changelog
+      - type: ChangeLog
         url: https://platform.lakera.ai/docs/changelog
       - type: Customers
         url: https://www.lakera.ai/customers
@@ -255,7 +255,7 @@ apis:
       - Supply Chain
       - Third-Party Vendor
     properties:
-      - type: Homepage
+      - type: Website
         url: https://hiddenlayer.com/
       - type: Platform
         url: https://hiddenlayer.com/aisec-platform/
@@ -280,7 +280,7 @@ apis:
       - Robust Intelligence
       - Third-Party Vendor
     properties:
-      - type: Homepage
+      - type: Website
         url: https://www.cisco.com/site/us/en/products/security/ai-defense/index.html
       - type: x-deployment
         value: Platform
@@ -301,7 +301,7 @@ apis:
       - Runtime Enforcement
       - Third-Party Vendor
     properties:
-      - type: Homepage
+      - type: Website
         url: https://www.lasso.security/
       - type: Customers
         url: https://www.lasso.security/customers
@@ -326,7 +326,7 @@ apis:
       - Third-Party Vendor
       - TPRM
     properties:
-      - type: Homepage
+      - type: Website
         url: https://promptarmor.com/
       - type: x-deployment
         value: Platform
@@ -347,7 +347,7 @@ apis:
       - Third-Party Vendor
       - Wallarm
     properties:
-      - type: Homepage
+      - type: Website
         url: https://www.wallarm.com/product/ai-security
       - type: Documentation
         url: https://docs.wallarm.com/
@@ -373,7 +373,7 @@ apis:
       - Open Source
       - Red Teaming
     properties:
-      - type: Homepage
+      - type: Website
         url: https://www.confident-ai.com/
       - type: GitHub
         url: https://github.com/confident-ai/deepeval
@@ -397,7 +397,7 @@ apis:
       - Insurance
       - Pivot
     properties:
-      - type: Homepage
+      - type: Website
         url: https://uselayerup.com/
       - type: x-deployment
         value: Platform
@@ -416,7 +416,7 @@ common:
     url: vocabulary/guardrails-vocabulary.yml
   - type: Examples
     url: examples/
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.lakera.ai/llms.txt
 maintainers:
   - FN: Kin Lane
