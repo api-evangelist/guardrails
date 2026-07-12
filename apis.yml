@@ -404,6 +404,10 @@ apis:
       - type: x-threat-categories
         value: historical
 common:
+  - type: TrustCenter
+    url: security/guardrails-trust-center.yml
+  - type: DomainSecurity
+    url: security/guardrails-domain-security.yml
   - type: Repository
     url: https://github.com/api-evangelist/guardrails
   - type: JSONSchema
