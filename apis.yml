@@ -1,5 +1,6 @@
 aid: guardrails
 name: AI Guardrails
+kind: topic
 description: >-
   AI Guardrails are runtime and design-time controls that screen the inputs and
   outputs of large language model (LLM) applications and AI agents. They detect
