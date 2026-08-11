@@ -416,6 +416,8 @@ apis:
       - type: x-threat-categories
         value: historical
 common:
+  - type: IssueTracker
+    url: https://github.com/api-evangelist/guardrails/issues
   - type: TrustCenter
     url: security/guardrails-trust-center.yml
   - type: DomainSecurity
