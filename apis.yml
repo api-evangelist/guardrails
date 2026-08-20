@@ -56,6 +56,13 @@ apis:
     tags:
       - Hallucination
       - Jailbreak Detection
+      - Open-Source
+      - PII Detection
+      - Structured Output
+      - Validator Hub
+    tags_raw:
+      - Hallucination
+      - Jailbreak Detection
       - Open Source
       - PII Detection
       - Structured Output
@@ -86,6 +93,14 @@ apis:
       with OpenAI, LLaMa, Falcon, Vicuna, and Mosaic models.
     humanURL: https://docs.nvidia.com/nemo/guardrails/
     tags:
+      - Colang
+      - Dialog Rails
+      - Input Rails
+      - NVIDIA
+      - Open-Source
+      - Output Rails
+      - Retrieval Rails
+    tags_raw:
       - Colang
       - Dialog Rails
       - Input Rails
@@ -210,6 +225,12 @@ apis:
     tags:
       - Content Moderation
       - Free Tier
+      - Multi-Modal
+      - OpenAI
+      - Provider-Native
+    tags_raw:
+      - Content Moderation
+      - Free Tier
       - Multimodal
       - OpenAI
       - Provider-Native
@@ -260,6 +281,13 @@ apis:
       using deterministic classifiers that operate outside the LLM inference path.
     humanURL: https://hiddenlayer.com/
     tags:
+      - Adversarial ML
+      - AI Detection & Response
+      - Model Scanner
+      - Runtime Security
+      - Supply Chain
+      - Third-Party Vendor
+    tags_raw:
       - Adversarial ML
       - AI Detection and Response
       - Model Scanner
@@ -377,6 +405,14 @@ apis:
       leakage.
     humanURL: https://www.confident-ai.com/
     tags:
+      - Agentic AI
+      - DeepEval
+      - DeepTeam
+      - Evaluation
+      - Observability
+      - Open-Source
+      - Red Teaming
+    tags_raw:
       - Agentic AI
       - DeepEval
       - DeepTeam
