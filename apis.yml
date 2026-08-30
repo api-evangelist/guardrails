@@ -237,7 +237,7 @@ apis:
     tags:
       - Content Moderation
       - Free Tier
-      - Multi-Modal
+      - Multimodal
       - OpenAI
       - Provider-Native
     tags_raw:
@@ -294,7 +294,7 @@ apis:
     humanURL: https://hiddenlayer.com/
     tags:
       - Adversarial ML
-      - AI Detection & Response
+      - AI Detection and Response
       - Model Scanner
       - Runtime Security
       - Supply Chain
