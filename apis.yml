@@ -16,16 +16,21 @@ description: >-
   payloads.
 type: Index
 deliveryModel:
-  model: unknown
-  open_source: unknown
+  model: open-core
+  license: Apache-2.0
+  license_evidence:
+    repo: guardrails-ai/guardrails
+    spdx: Apache-2.0
+    stars: 7448
+  open_source: true
   commercial: true
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: medium
   source:
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-license
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: unknown
@@ -68,7 +73,7 @@ apis:
     tags:
       - Hallucination
       - Jailbreak Detection
-      - Open-Source
+      - Open Source
       - PII Detection
       - Structured Output
       - Validator Hub
@@ -79,6 +84,7 @@ apis:
       - PII Detection
       - Structured Output
       - Validator Hub
+      - Open-Source
     properties:
       - type: Website
         url: https://www.guardrailsai.com/
@@ -109,7 +115,7 @@ apis:
       - Dialog Rails
       - Input Rails
       - NVIDIA
-      - Open-Source
+      - Open Source
       - Output Rails
       - Retrieval Rails
     tags_raw:
@@ -120,6 +126,7 @@ apis:
       - Open Source
       - Output Rails
       - Retrieval Rails
+      - Open-Source
     properties:
       - type: Website
         url: https://developer.nvidia.com/nemo-guardrails
@@ -376,6 +383,14 @@ apis:
       - NIST AI RMF
       - OWASP LLM Top 10
       - Third-Party Vendor
+      - Third-Party Risk Management
+    tags_raw:
+      - GRC
+      - Indirect Prompt Injection
+      - MITRE Atlas
+      - NIST AI RMF
+      - OWASP LLM Top 10
+      - Third-Party Vendor
       - TPRM
     properties:
       - type: Website
@@ -417,12 +432,12 @@ apis:
       leakage.
     humanURL: https://www.confident-ai.com/
     tags:
-      - Agentic AI
+      - AI Agents
       - DeepEval
       - DeepTeam
       - Evaluation
       - Observability
-      - Open-Source
+      - Open Source
       - Red Teaming
     tags_raw:
       - Agentic AI
@@ -432,6 +447,7 @@ apis:
       - Observability
       - Open Source
       - Red Teaming
+      - Open-Source
     properties:
       - type: Website
         url: https://www.confident-ai.com/
@@ -452,6 +468,11 @@ apis:
       rather than horizontal AI guardrails. Catalogued for historical context.
     humanURL: https://uselayerup.com/
     tags:
+      - AI Agents
+      - Historical
+      - Insurance
+      - Pivot
+    tags_raw:
       - Agentic AI
       - Historical
       - Insurance
