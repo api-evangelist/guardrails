@@ -57,7 +57,7 @@ tags:
 url: https://raw.githubusercontent.com/api-evangelist/guardrails/refs/heads/main/apis.yml
 humanURL: https://github.com/api-evangelist/guardrails
 created: '2026-05-22'
-modified: '2026-05-22'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
   - aid: guardrails:guardrails-ai
@@ -485,6 +485,8 @@ apis:
       - type: x-threat-categories
         value: historical
 common:
+  - url: https://guardrailsai.com/blog
+    type: Blog
   - type: IssueTracker
     url: https://github.com/api-evangelist/guardrails/issues
   - type: TrustCenter
