@@ -185,6 +185,14 @@ apis:
       indirect prompt injection.
     humanURL: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection
     tags:
+      - Microsoft Azure
+      - Content Safety
+      - Document Attacks
+      - Indirect Prompt Injection
+      - Jailbreak Detection
+      - Microsoft
+      - Provider-Native
+    tags_raw:
       - Azure
       - Content Safety
       - Document Attacks
